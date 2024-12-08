@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.util.Date"/>
-    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
     <fullyQualifiedTypeName name="java.io.PrintWriter"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="co.kh.dev.common.DBUtility"/>
+    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="co.kh.dev.account.model.AccountVO"/>
 </qualifiedTypeNameHistroy>

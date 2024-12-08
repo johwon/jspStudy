@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 	            // 세션이 없을 때 로그인 화면 출력
 	            out.println("<html>");
 	            out.println("<body>");
-	            out.println("<form method='post' action='/jspStudy/loginCheckServlet.do'>");
+	            out.println("<form method='post' action='/jspStudy/membership/membership_loginCheck.do'>");
 	            out.println("<table border='1' width='300' align=\"center\">");
 	            out.println("<tr>");
 	            out.println("<th width='100'>아이디</th>");

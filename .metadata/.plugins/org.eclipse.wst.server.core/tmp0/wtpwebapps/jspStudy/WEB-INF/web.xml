@@ -45,4 +45,29 @@
     <servlet-name>MemberList</servlet-name>
     <url-pattern>/MemberList</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>hello.do</servlet-name>
+    <servlet-class>co.kh.dev.Hello</servlet-class>
+    <init-param>
+      <param-name>phone</param-name>
+      <param-value>010-1111-2222</param-value>
+    </init-param>
+    <init-param>
+      <param-name>id</param-name>
+      <param-value>1234</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>hello.do</servlet-name>
+    <url-pattern>/hello.do</url-pattern>
+  </servlet-mapping>
+ 	<!-- 에러처리코드 -->
+ 	<error-page>
+ 		<error-code>404</error-code>
+ 		<location>/error/error404.jsp</location>
+ 	</error-page>
+ 	<error-page>
+ 		<error-code>500</error-code>
+ 		<location>/error/error500.jsp</location>
+ 	</error-page>
 </web-app>
