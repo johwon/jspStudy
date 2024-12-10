@@ -3,17 +3,17 @@ package co.kh.dev.login;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import co.kh.dev.login.model.LoginDAO;
+import co.kh.dev.login.model.LoginVO;
 
 @WebServlet("/memberInsertServlet.do")
 public class MemberInsertServlet extends HttpServlet {
@@ -23,13 +23,6 @@ public class MemberInsertServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String url = "jdbc:oracle:thin:@127.0.0.1:1521/xe";
-		String memberInsert = "INSERT INTO LOGIN VALUES(LOGIN_SEQ.NEXTVAL, ?,?,?,?,?)";
 
 		String name = request.getParameter("name");
 		String id = request.getParameter("id");
@@ -37,40 +30,15 @@ public class MemberInsertServlet extends HttpServlet {
 		String phone = request.getParameter("phone");
 		String address = request.getParameter("address");
 		int count = 0;
+		LoginVO lvo = new LoginVO(0, name, id, password, phone, address);
+		LoginDAO ldao = new LoginDAO();
+		boolean returnFlag = ldao.insertDB(lvo);
 
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			con = DriverManager.getConnection(url, "webuser", "123456");
-			pstmt = con.prepareStatement(memberInsert);
-			pstmt.setString(1, name);
-			pstmt.setString(2, id);
-			pstmt.setString(3, password);
-			pstmt.setString(4, phone);
-			pstmt.setString(5, address);
-			count = pstmt.executeUpdate();
-		} catch (SQLException | ClassNotFoundException e) {
-			System.out.println(e.toString());
-		} finally {
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					System.out.println(e.toString());
-				}
-			}
-			if (pstmt != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					System.out.println(e.toString());
-				}
-			}
-		}
-		if (count != 0) {
-			System.out.println("입력성공");
-			response.sendRedirect("/jspStudy/loginServlet.do");
-		} else {
-			System.out.println("입력실패");
+		if(returnFlag) {
+			//html 화면 구현
+			System.out.println("회원가입 성공하였습니다.");
+		}else {
+			System.out.println("회원가입에 실패했습니다.");
 		}
 	}
 
