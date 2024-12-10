@@ -3,7 +3,11 @@
     <fullyQualifiedTypeName name="java.io.PrintWriter"/>
     <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="java.sql.Connection"/>
-    <fullyQualifiedTypeName name="co.kh.dev.common.DBUtility"/>
     <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+    <fullyQualifiedTypeName name="co.kh.dev.signup.model.SignupVO"/>
+    <fullyQualifiedTypeName name="co.kh.dev.common.DBUtility"/>
+    <fullyQualifiedTypeName name="co.kh.dev.login.model.LoginDAO"/>
     <fullyQualifiedTypeName name="co.kh.dev.account.model.AccountVO"/>
+    <fullyQualifiedTypeName name="co.kh.dev.login2.model.LoginVO"/>
+    <fullyQualifiedTypeName name="co.kh.dev.login.model.LoginVO"/>
 </qualifiedTypeNameHistroy>

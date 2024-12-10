@@ -17,68 +17,67 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
-		//1. 사용자정보를 가져온다 2. db 조회 
-		//3. 화면을 출력한다
-	    PrintWriter out = null;
-	    response.setContentType("text/html;charset=UTF-8");
-	    try {
-	        out = response.getWriter();
-	        // 1. 세션 정보를 가져오기 (세션이 없으면 null 반환)
-	        HttpSession session = request.getSession(false);
+		// 1.사용자정보가져온다 2.디비조회
+		// 3.화면을 출력한다.
+		PrintWriter out = null;
+		response.setContentType("text/html;charset=UTF-8");
+		try {
+			out = response.getWriter();
+			// 4. 세션 정보를 가져오기 (세션이 없으면 null 반환)
+			HttpSession session = request.getSession(false);
 
-	        if (session == null) {
-	            // 세션이 없을 때 로그인 화면 출력
-	            out.println("<html>");
-	            out.println("<body>");
-	            out.println("<form method='post' action='/jspStudy/membership/membership_loginCheck.do'>");
-	            out.println("<table border='1' width='300' align=\"center\">");
-	            out.println("<tr>");
-	            out.println("<th width='100'>아이디</th>");
-	            out.println("<td width='200'>&nbsp;<input type='text' name='id'></td>");
-	            out.println("</tr>");
-	            out.println("<tr>");
-	            out.println("<th width='100'>비번</th>");
-	            out.println("<td width='200'>&nbsp;<input type='password' name='pwd'></td>");
-	            out.println("</tr>");
-	            out.println("<tr>");
-	            out.println("<td align='center' colspan='2'>");
-	            out.println("<a href='member/member2.html'><input type='button' value='회원가입'></a> &nbsp; &nbsp;");
-	            out.println("<input type='submit' value='로그인'>");
-	            out.println("</td>");
-	            out.println("</tr>");
-	            out.println("</form>");
-	            out.println("</table>");
-	            out.println("</body>");
-	            out.println("</html>");
-	        } else {
-	            // 세션이 있을 때
-	            String id = (String) session.getAttribute("id");
-	                out.println("<html>");
-	                out.println("<body>");
-	                out.println("<table border='1' width='300' align=\"center\">");
-	                out.println("<tr>");
-	                out.println("<td width='300' align='center'>" + id + " 님 로그인 되었습니다.</td>");
-	                out.println("</tr>");
-	                out.println("<tr>");
-	                out.println("<td align='center'>");
-	                out.println("<a href='myPageServlet.do'>회원정보</a> &nbsp;&nbsp;");
-	                out.println("<a href='logoutServlet'>로그아웃</a>");
-	                out.println("</td>");
-	                out.println("</tr>");
-	                out.println("</table>");
-	                out.println("</body>");
-	                out.println("</html>");
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    } finally {
-	        if (out != null) {
-	            out.close();
-	        }
-	    }
+			if (session == null) {
+				// 세션이 없을 때 로그인 화면 출력
+				out.println("<html>");
+				out.println("<body>");
+				out.println("<form method='post' action='/jspStudy/loginCheckServlet.do'>");
+				out.println("<table border='1' width='300' align=\"center\">");
+				out.println("<tr>");
+				out.println("<th width='100'>아이디</th>");
+				out.println("<td width='200'>&nbsp;<input type='text' name='id'></td>");
+				out.println("</tr>");
+				out.println("<tr>");
+				out.println("<th width='100'>비번</th>");
+				out.println("<td width='200'>&nbsp;<input type='password' name='pwd'></td>");
+				out.println("</tr>");
+				out.println("<tr>");
+				out.println("<td align='center' colspan='2'>");
+				out.println(
+						"<a href='/jspStudy/member/member.html'><input type='button' value='회원가입'></a> &nbsp; &nbsp;");
+				out.println("<input type='submit' value='로그인'>");
+				out.println("</td>");
+				out.println("</tr>");
+				out.println("</form>");
+				out.println("</table>");
+				out.println("</body>");
+				out.println("</html>");
+			} else {
+				// 세션이 있을 때
+				String id = (String) session.getAttribute("id");
+				out.println("<html>");
+				out.println("<body>");
+				out.println("<table border='1' width='300' align=\"center\">");
+				out.println("<tr>");
+				out.println("<td width='300' align='center'>" + id + " 님 로그인 되었습니다.</td>");
+				out.println("</tr>");
+				out.println("<tr>");
+				out.println("<td align='center'>");
+				out.println("<a href='myPageServlet.do'>회원정보</a> &nbsp;&nbsp;");
+				out.println("<a href='logoutServlet.do'>로그아웃</a>");
+				out.println("</td>");
+				out.println("</tr>");
+				out.println("</table>");
+				out.println("</body>");
+				out.println("</html>");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (out != null) {
+				out.close();
+			}
+		}
 	}
-
-
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		processRequest(request, response);

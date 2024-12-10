@@ -13,7 +13,7 @@ public class AccountDAO {
 	private final String SELECT_SQL = "SELECT * FROM ACCOUNT ORDER BY NO";
 	private final String SELECT_BY_ID_SQL = "SELECT * FROM ACCOUNT WHERE ID = ?";
 	private final String SELECT_LOGIN_CHECK_SQL = "SELECT * FROM ACCOUNT WHERE ID = ? AND PWD = ?";
-	private final String INSERT_SQL = "INSERT INTO ACCOUNT VALUES((SELECT NVL(MAX(NO),0)+1 FROM ACCOUNT),?,?,?,SYSDATE)";
+	private final String INSERT_SQL = "INSERT INTO ACCOUNT VALUES((select NVL(max(no),0)+1 from ACCOUNT),?,?,?,SYSDATE)";
 	private final String DELETE_SQL = "DELETE FROM ACCOUNT WHERE NO = ?";
 	private final String UPDATE_SQL = "UPDATE ACCOUNT SET NAME= ? , PWD = ? WHERE ID = ?";
 

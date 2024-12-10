@@ -4,6 +4,7 @@
 <%
 try {
 	request.setCharacterEncoding("UTF-8");
+
 	String name = request.getParameter("name");
 	String uid = request.getParameter("id");
 	String pwd = request.getParameter("pwd");
@@ -38,7 +39,8 @@ try {
 			</td>
 		</tr>
 		<tr>
-			<td align="center"><a href='/jspStudy/membership/membership_login.jsp'><input
+			<td align="center"><a
+				href='/jspStudy/membership/membership_login.jsp'><input
 					type="button" value="로그인"></a></td>
 		</tr>
 	</table>
@@ -57,8 +59,9 @@ System.out.println("입력실패");
 	<h1 align='center'>회원가입이 실패되었습니다.</h1>
 	<table align='center' width='300' border='1'>
 		<tr>
-			<td align="center"><a href='/jspStudy/membership/membership.html'><input
-					type="button" value="회원가입"></a></td>
+			<td align="center"><a
+				href='/jspStudy/membership/membership.html'><input type="button"
+					value="회원가입"></a></td>
 		</tr>
 	</table>
 </body>
@@ -66,10 +69,10 @@ System.out.println("입력실패");
 <%
 }
 } catch (Exception e) {
-	e.printStackTrace();
+e.printStackTrace();
 } finally {
-	if(out != null) {
-		out.close();
-	}
+if (out != null) {
+out.close();
+}
 }
 %>

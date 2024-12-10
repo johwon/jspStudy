@@ -1,19 +1,17 @@
 package co.kh.dev.account;
 
-
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import co.kh.dev.account.model.AccountDAO;
-import co.kh.dev.account.model.AccountVO;
 import co.kh.dev.common.DBUtility;
-
 
 @WebServlet("/loginCheckServlet.do")
 public class LoginCheckServlet extends HttpServlet {
@@ -24,38 +22,47 @@ public class LoginCheckServlet extends HttpServlet {
 	}
 
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) {
-		final String SELECT_SQL = "SELECT PWD, NAME FROM ACCOUNT WHERE ID = ?";
-		Connection con = DBUtility.dbCon();
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			// 1. 사용자정보를 얻는다
+			//1. 사용자 정보를 읽는다.
 			request.setCharacterEncoding("UTF-8");
 			String id = request.getParameter("id");
-			String pwd = request.getParameter("pwd");
+			String password = request.getParameter("password");
 			
-			pstmt = con.prepareStatement(SELECT_SQL);
+			//2. 데이터베이스에서 확인한다. id, pass
+			
+			String url = "jdbc:oracle:thin:@127.0.0.1:1521/xe";
+			String loginCheck_select = "select * from login where id = ?";
+			
+			String idChk = null;
+			String passChk = null;
+			
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection(url, "webuser", "123456");
+			
+			pstmt = con.prepareStatement(loginCheck_select);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			// 2. curd
-			AccountDAO ad = new AccountDAO();
-			AccountVO avo = new AccountVO();
-			avo.setId(id);
-			avo.setPwd(pwd);
-			AccountVO ravo = ad.selectLoginCheckDB(avo);
-			if(ravo == null) {
-				//아이디 패스워드 잘못된 경우
+			while(rs.next()) {
+				idChk = rs.getString("id");
+				passChk = rs.getString("password");
 				
-			}else {
-				HttpSession session = request.getSession();
-				session.setAttribute("id", ravo.getId());
-				session.setAttribute("pwd", ravo.getPwd());
-				session.setAttribute("name", ravo.getName());
+				//3. 체크확인해서 로그인 인정이 되면 세션을 만들어서 저장한다.
+				if(id.equals(idChk)&& password.equals(passChk)) {
+					//세션이 있으면 가져오고 없으면 생성함
+					HttpSession session = request.getSession();
+					session.setAttribute("id", id);
+					session.setAttribute("password", password);
+					break;
+				}
 			}
-			//3.화면
-			response.sendRedirect("/jspStudy/loginServlet");
+			response.sendRedirect("/jspStudy/loginServlet.do");
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			DBUtility.dbClose(con, pstmt, rs);
 		}
 	}
 

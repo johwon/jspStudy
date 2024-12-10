@@ -7,7 +7,7 @@ if (id == null) {
 <html>
 <body>
 	<form method='post' action='/jspStudy/membership/membership_loginCheck.jsp'>
-		<table border='1' width='300' align=\"center\">
+		<table border='1' width='300' align="center">
 			<tr>
 				<th width='100'>아이디</th>
 				<td width='200'>&nbsp;<input type='text' name='id'></td>
@@ -27,7 +27,6 @@ if (id == null) {
 </html>
 <%
  } else {
-	 id = (String) session.getAttribute("id");
 %>
 <html>
 <body>
