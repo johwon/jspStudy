@@ -16,40 +16,26 @@ if (id != null && pwd != null) {
 	cvo.setPwd(pwd);
 
 	CustomerDAO cdao = new CustomerDAO();
-	boolean returnFlag = cdao.selectCustomer(cvo);
+	int check = cdao.selectLoginCheck(cvo);
 
-	if (returnFlag) {
+	if (check==1) {	//로그인성공
 		session.setAttribute("id", id);
 		session.setAttribute("pass", pwd);
-%>
-<html>
-<body>
-	<table border='1' width='300' align="center">
-		<tr>
-			<td width='300' align='center'> <%= id %> 님 로그인 되었습니다.</td>
-		</tr>
-		<tr>
-			<td align='center'><a href=#>회원정보</a>
-				&nbsp;&nbsp; <a href='logout.jsp'>로그아웃</a></td>
-		</tr>
-	</table>
-</body>
-</html>
-<%
-	} else {
+		response.sendRedirect("loginPage.jsp");
+	} else if(check==0){	//아이디는 있는데 비밀번호 틀림
 %>
 <script>
-	alert('로그인 실패했습니다.');
+	alert('비밀번호가 틀렸습니다.');
+	history.go(-1);		/* 이전화면으로 돌아감 */
 </script>
 <%
-	response.sendRedirect("loginForm.jsp");
-	}
-}else{
+}else {	//아이디 자체가 존재하지 않는 경우
 	%>
 	<script>
-	alert('아이디 패스워드를 입력하세요');
+	alert('아이디가 존재하지 않습니다.');
+	history.go(-1);		/* 이전화면으로 돌아감 */
 </script>
 <%
-	response.sendRedirect("loginForm.jsp");
+}
 }
 %>
